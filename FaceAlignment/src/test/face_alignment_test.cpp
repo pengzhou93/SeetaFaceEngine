@@ -51,24 +51,35 @@ std::string MODEL_DIR = "./model/";
 int main(int argc, char** argv)
 {
   // Initialize face detection model
-  seeta::FaceDetection detector("../../../FaceDetection/model/seeta_fd_frontal_v1.0.bin");
+  if(argc < 4) {
+    std::cout <<"Usage: image det_model align_model" << std::endl;
+    return -1;
+  }
+  std::string img_file = argv[1];
+  std::string det_model = argv[2];
+  std::string align_model = argv[3];
+  std::cout << "img_file:"<< img_file<< std::endl
+	    << "det_model:" << det_model << std::endl
+	    << "align_model:" << align_model << std::endl;
+  
+  seeta::FaceDetection detector(det_model.c_str());
   detector.SetMinFaceSize(40);
   detector.SetScoreThresh(2.f);
   detector.SetImagePyramidScaleFactor(0.8f);
   detector.SetWindowStep(4, 4);
 
   // Initialize face alignment model 
-  seeta::FaceAlignment point_detector((MODEL_DIR + "seeta_fa_v1.1.bin").c_str());
+  seeta::FaceAlignment point_detector(align_model.c_str());
 
   //load image
   IplImage *img_grayscale = NULL;
-  img_grayscale = cvLoadImage((DATA_DIR + "image_0001.png").c_str(), 0);
+  img_grayscale = cvLoadImage(img_file.c_str(), 0);
   if (img_grayscale == NULL)
   {
     return 0;
   }
 
-  IplImage *img_color = cvLoadImage((DATA_DIR + "image_0001.png").c_str(), 1);
+  IplImage *img_color = cvLoadImage(img_file.c_str(), 1);
   int pts_num = 5;
   int im_width = img_grayscale->width;
   int im_height = img_grayscale->height;

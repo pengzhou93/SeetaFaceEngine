@@ -56,6 +56,7 @@ set(facedet_required_libs seeta_facedet_lib)
 # Build examples
 if (BUILD_EXAMPLES)
     message(STATUS "Build with examples.")
+    set(OpenCV_DIR "/home/shhs/env/opencv3_2_openface/share/OpenCV")
     find_package(OpenCV)
     if (NOT OpenCV_FOUND)
         message(WARNING "OpenCV not found. Test will not be built.")

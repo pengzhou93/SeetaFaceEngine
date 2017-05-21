@@ -23,6 +23,9 @@ set(VIPLNET_SRC_DIR ${PROJECT_SOURCE_DIR}/src)
 
 include_directories(${VIPLNET_INCLUDE_DIR})
 include_directories(${VIPLNET_SRC_DIR})
+# detection
+include_directories("../FaceDetection/include")
+include_directories("../FaceAlignment/include")
 
 add_subdirectory(src)
 
