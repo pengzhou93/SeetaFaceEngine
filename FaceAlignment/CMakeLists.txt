@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 2.8.4)
 
-project(seeta_fa_lib)
-
+project(seeta_facealign_lib)
+message(Build face alignment lib)
 # Build options
-option(BUILD_EXAMPLES  "Set to ON to build examples"  ON)
+option(BUILD_EXAMPLES  "Set to ON to build examples"  OFF)
 
 # Use C++11
 #set(CMAKE_CXX_STANDARD 11)
@@ -24,8 +24,12 @@ set(src_files
     )
 
 # build face alignment lib
-add_library(seeta_fa_lib SHARED ${src_files})
-set(fa_required_libs seeta_fa_lib)
+add_library(seeta_facealign_lib SHARED ${src_files})
+install(DIRECTORY include/ DESTINATION include/FaceAlignment)
+install(TARGETS seeta_facealign_lib LIBRARY DESTINATION lib
+  PERMISSIONS WORLD_EXECUTE OWNER_EXECUTE OWNER_WRITE OWNER_READ)
+
+set(fa_required_libs seeta_facealign_lib)
 
 if (BUILD_EXAMPLES)
     set(seeta_facedet_lib "./libseeta_facedet_lib.so")
@@ -43,5 +47,5 @@ if (BUILD_EXAMPLES)
         target_link_libraries(fa_align_test ${fa_required_libs})
     endif()
 else()
-message("Don't build example")      
+message(STATUS "Don't build example")      
 endif()

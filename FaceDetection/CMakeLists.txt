@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.1.0)
 
 project(seeta_facedet_lib)
-
+message("Build face detection lib")
 # Build options
-option(BUILD_EXAMPLES  "Set to ON to build examples"  ON)
+option(BUILD_EXAMPLES  "Set to ON to build examples"  OFF)
 option(USE_OPENMP      "Set to ON to build use openmp"  ON)
 option(USE_SSE         "Set to ON to build use SSE"  ON)
 
@@ -51,19 +51,21 @@ set(src_files
 
 # Build shared library
 add_library(seeta_facedet_lib SHARED ${src_files})
-set(facedet_required_libs seeta_facedet_lib)
 
+install(DIRECTORY include/ DESTINATION include/FaceDetection)
+install(TARGETS seeta_facedet_lib LIBRARY DESTINATION lib
+  PERMISSIONS WORLD_EXECUTE OWNER_EXECUTE OWNER_WRITE OWNER_READ)
+
+set(facedet_required_libs seeta_facedet_lib)
 # Build examples
 if (BUILD_EXAMPLES)
     message(STATUS "Build with examples.")
-    set(OpenCV_DIR "/home/shhs/env/opencv3_2_openface/share/OpenCV")
     find_package(OpenCV)
     if (NOT OpenCV_FOUND)
         message(WARNING "OpenCV not found. Test will not be built.")
     else()
         include_directories(${OpenCV_INCLUDE_DIRS})
         list(APPEND facedet_required_libs ${OpenCV_LIBS})
-        
         add_executable(facedet_test src/test/facedetection_test.cpp)
         target_link_libraries(facedet_test ${facedet_required_libs})
     endif()
