@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 2.6)
 
 project (cmss_faceid_lib)
-message(Build face identification lib)
+message("Build face identification lib")
 option(BUILD_EXAMPLES  "Set to ON to build examples"  OFF)
 
 set(CMAKE_BUILD_TYPE "Release")

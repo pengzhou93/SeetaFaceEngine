@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.4)
 
 project(cmss_facealign_lib)
-message(Build face alignment lib)
+message("Build face alignment lib")
 # Build options
 option(BUILD_EXAMPLES  "Set to ON to build examples"  OFF)
 
